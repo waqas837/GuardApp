@@ -11,7 +11,7 @@ import {
 import userimg from "../images/download.jpg";
 import locationimg from "../images/locationimage.png";
 import { grey } from "@material-ui/core/colors";
-import { PictureAsPdf, Search } from "@material-ui/icons";
+import { PictureAsPdf } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
 import Navbar from "./Navbar";
 
@@ -33,10 +33,7 @@ const SearchUser = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-                {/* search icon */}
-                <IconButton>
-                  <Search fontSize="small" style={{ color: MainCyan }} />
-                </IconButton>
+               
                 {/* pdf icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />

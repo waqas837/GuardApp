@@ -7,6 +7,8 @@ import UserList from "./AdminPanel/UserList";
 import Posts from "./AdminPanel/Posts";
 import Alerts from "./AdminPanel/Alerts";
 import SearchIncidents from "./AdminPanel/SearchIncidents";
+import Comments from "./AdminPanel/Comments";
+import Notifications from "./AdminPanel/Notifications";
 function App() {
   return (
     <div>
@@ -28,6 +30,12 @@ function App() {
         </Route>
         <Route exact path="/incidents">
          <SearchIncidents/>
+        </Route>
+        <Route exact path="/comments">
+         <Comments/>
+        </Route>
+        <Route exact path="/notifications">
+         <Notifications/>
         </Route>
       </Router>
     </div>

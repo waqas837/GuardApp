@@ -22,7 +22,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:"50px"
   },
   formControl: {
-    minWidth: 120,
+    minWidth: 160,
+  },
+  formControl2: {
+    minWidth: 160,
+    marginTop:"-15px"
   },
 }));
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddAndEditMemberDialog from "./AddAndEditMemberDialog";
+import MainDialog from "./MainDialog";
 import {
   Box,
   Button,
@@ -12,23 +12,44 @@ import {
 } from "@material-ui/core";
 import Navbar from "./Navbar";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
-import { Add, Edit } from "@material-ui/icons";
+import { AddCircle, Edit } from "@material-ui/icons";
 const EditProfile = () => {
   const [open, setopen] = useState(false);
+  const [member, setmember] = useState("NoSelection");
   const classes = useStyles();
+  // 1.add member
+  const addMember = () =>{
+    setopen(true)
+    setmember("AddMember")
+  }
+  // 2.edit member
+  const editMember = () =>{
+    setopen(true)
+    setmember("EditMember")
+  }
   return (
     <Box>
       {/* navbar */}
       <Navbar />
       {/* edit and add member dialog */}
-      <AddAndEditMemberDialog open={open} setopen={setopen} />
+      <MainDialog
+       member={member}
+       open={open} setopen={setopen} />
       {/* welcome to edit profile */}
       <Box mt={5}>
         <Container maxWidth="md">
           {/* line 1 */}
+          <Box textAlign="right">
+          <IconButton onClick={addMember}>
+            <AddCircle
+             fontSize="small"
+             style={{ color: MainCyan }} />
+           </IconButton>
+          </Box>
           <Grid container spacing={3}>
             {/* line 1, col 1 */}
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            {/* add icon */}
               <Box my={2}>
                 <Paper
                   className={classes.resposiveFromSide}
@@ -152,12 +173,13 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {/* edit icon */}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}
                               />
                             </IconButton>
+                            
                           </Box>
                         </Grid>
                       </Grid>

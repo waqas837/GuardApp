@@ -8,7 +8,6 @@ import {
   InputBase,
   makeStyles,
   Toolbar,
-  Typography,
 } from "@material-ui/core";
 import { Menu, Search, Settings } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
@@ -106,9 +105,9 @@ const Navbar = () => {
           {/* space generator */}
           <Box className={classes.grow}></Box>
           <Box
-            style={{
-              boxShadow: "0 1px 2px rgb(0 0 0 / 0.2)",
-            }}
+            // style={{
+            //   boxShadow: "0 1px 2px rgb(0 0 0 / 0.2)",
+            // }}
           >
             <IconButton>
               <Settings fontSize="small" style={{ color: MainCyan }} />

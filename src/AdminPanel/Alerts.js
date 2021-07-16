@@ -16,7 +16,6 @@ import {
   TableContainer,
   Paper,
   Button,
-  ButtonGroup,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -67,7 +66,7 @@ const Alerts = () => {
                 <Typography style={{ fontWeight: "bold" }} variant="h6">
                   Alerts
                 </Typography>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl2}>
                   <InputLabel>Select Type</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -105,20 +104,15 @@ const Alerts = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-                {/* search icon */}
-                <IconButton>
-                  <Search fontSize="small" style={{ color: MainCyan }} />
-                </IconButton>
                 {/* pdf icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
                 {/* add icon */}
-                <IconButton>
+                <IconButton onClick={() => setopen(true)}>
                   <Add
                     fontSize="small"
                     style={{ color: MainCyan }}
-                    onClick={() => setopen(true)}
                   />
                 </IconButton>
               </Box>
@@ -302,7 +296,7 @@ const Alerts = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* edit user dialog */}
+      {/* alert has its own dialog */}
       <Dialog open={open} onClose={() => setopen(false)}>
         <DialogTitle>
           <Typography style={{ fontWeight: "bold" }} variant="h6">

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Container,
@@ -17,35 +16,29 @@ import {
   TableContainer,
   Paper,
   Button,
-  ButtonGroup,
   Dialog,
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
-import MainDialog from "./MainDialog"
+
 import {
   CheckCircleOutline,
   ErrorOutline,
   PictureAsPdf,
 } from "@material-ui/icons";
+import React from "react";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
 import Navbar from "./Navbar";
 
-const UserList = () => {
+const Notifications = () => {
   const classes = useStyles();
   const [age, setAge] = React.useState("");
   const [open, setopen] = React.useState(false);
   const [delet, setdelet] = React.useState(false);
   const [opentwo, setopentwo] = React.useState(false);
-  const [user, setuser] = React.useState("NoSelection");
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  // 1.edit a user
-  const editUser = () =>{
-    setopen(true)
-    setuser("EditUser")
-  }
   //   close both dialogs
   const closeBothDialogs = () => {
     setopen(false);
@@ -67,7 +60,7 @@ const UserList = () => {
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box display="flex" justifyContent="space-evenly">
                 <Typography style={{ fontWeight: "bold" }} variant="h6">
-                  User List
+                  Notifications
                 </Typography>
                 <FormControl className={classes.formControl2}>
                   <InputLabel>Select Type</InputLabel>
@@ -107,8 +100,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-                
-                {/* pdf icon */}
+                {/* search icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
@@ -126,50 +118,40 @@ const UserList = () => {
                         <TableCell
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Username
+                          UserId
                         </TableCell>
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          FullName
+                          Id
                         </TableCell>
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Email
+                          Post Id
                         </TableCell>
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Phone No.
+                          Details
                         </TableCell>
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Address
+                          Location
                         </TableCell>
+
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          AboutUser
+                          Post Time
                         </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{ color: MainCyan, fontWeight: "bold" }}
-                        >
-                          Last Login
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{ color: MainCyan, fontWeight: "bold" }}
-                        >
-                          Status
-                        </TableCell>
+
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
@@ -184,36 +166,19 @@ const UserList = () => {
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
+                        {/* check this one for after maxwidth it will new on new line/text wrap */}
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+
                         <TableCell align="right">
                           <Button
                             size="small"
                             className={classes.buttonStyleOutlined}
+                            onClick={() => setdelet(true)}
                           >
-                            Block
+                            Delete
                           </Button>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                              onClick={editUser}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
                         </TableCell>
                       </TableRow>
                       {/* row */}
@@ -224,34 +189,15 @@ const UserList = () => {
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+
                         <TableCell align="right">
                           <Button
                             size="small"
-                            variant="contained"
-                            className={classes.buttonStyle}
+                            className={classes.buttonStyleOutlined}
+                            onClick={() => setdelet(true)}
                           >
-                            Approve
+                            Delete
                           </Button>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                              onClick={editUser}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -334,10 +280,8 @@ const UserList = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* edit user dialog */}
-      <MainDialog user={user} open={open} setopen={setopen}/>
     </div>
   );
 };
 
-export default UserList;
+export default Notifications;

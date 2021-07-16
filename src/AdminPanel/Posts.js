@@ -18,20 +18,20 @@ import {
   Button,
   ButtonGroup,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
+  Input,
 } from "@material-ui/core";
-import AddAndEditDialog from "./AddAndEditMemberDialog";
+import MainDialog from "./MainDialog";
 import {
   Add,
   CheckCircleOutline,
   ErrorOutline,
   PictureAsPdf,
-  Search,
 } from "@material-ui/icons";
 import React from "react";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
+import dummyimg from "../images/download.jpg"
 import Navbar from "./Navbar";
 
 const Posts = () => {
@@ -40,6 +40,20 @@ const Posts = () => {
   const [open, setopen] = React.useState(false);
   const [delet, setdelet] = React.useState(false);
   const [opentwo, setopentwo] = React.useState(false);
+  const [post, setpost] = React.useState("NoSelection");
+  // 1.add a new post
+  const addNewPost = () => {
+    setpost("AddPost");
+    setopen(true);
+  
+  };
+  // 2.edit a new post
+  const editPost = async () => {
+    setpost("EditPost");
+    setopen(true);
+   
+    
+  };
   const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -66,7 +80,7 @@ const Posts = () => {
                 <Typography style={{ fontWeight: "bold" }} variant="h6">
                   Posts
                 </Typography>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl2}>
                   <InputLabel>Select Type</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -104,17 +118,17 @@ const Posts = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-                {/* search icon */}
-                <IconButton>
-                  <Search fontSize="small" style={{ color: MainCyan }} />
-                </IconButton>
+               
                 {/* pdf icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
-                {/* pdf icon */}
-                <IconButton>
-                  <Add fontSize="small" style={{ color: MainCyan }} />
+                {/* add icon */}
+                <IconButton onClick={addNewPost}>
+                  <Add
+                    fontSize="small"
+                    style={{ color: MainCyan }} 
+                  />
                 </IconButton>
               </Box>
             </Grid>
@@ -148,7 +162,7 @@ const Posts = () => {
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                         Location
+                          Location
                         </TableCell>
                         <TableCell
                           align="right"
@@ -184,16 +198,29 @@ const Posts = () => {
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">
+                          <Grid container>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                          </Grid>
+                        </TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                         
 
                         <TableCell align="right">
                           <ButtonGroup orientation="horizontal">
                             <Button
                               size="small"
                               className={classes.buttonStyle}
-                              onClick={() => setopen(true)}
                             >
                               Approve
                             </Button>
@@ -203,6 +230,13 @@ const Posts = () => {
                               onClick={() => setdelet(true)}
                             >
                               Delete
+                            </Button>
+                            <Button
+                              size="small"
+                              className={classes.buttonStyleOutlined}
+                              onClick={editPost}
+                            >
+                              Edit
                             </Button>
                           </ButtonGroup>
                         </TableCell>
@@ -214,25 +248,45 @@ const Posts = () => {
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">
+                        <Grid container>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                          </Grid>
+                        </TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                         
 
                         <TableCell align="right">
                           <ButtonGroup orientation="horizontal">
                             <Button
                               size="small"
                               className={classes.buttonStyle}
-                              onClick={() => setopen(true)}
                             >
                               Approve
                             </Button>
                             <Button
                               size="small"
                               className={classes.buttonStyleOutlined}
-                              onClick={() => setopen(true)}
+                              onClick={() => setdelet(true)}
                             >
                               Delete
+                            </Button>
+                            <Button
+                              size="small"
+                              className={classes.buttonStyleOutlined}
+                              onClick={editPost}
+                            >
+                              Edit
                             </Button>
                           </ButtonGroup>
                         </TableCell>
@@ -318,7 +372,12 @@ const Posts = () => {
         </DialogActions>
       </Dialog>
       {/* edit user dialog */}
-      <AddAndEditDialog posts={true} open={open} setopen={setopen}/>
+      {/* if postCheck is true:add a post , else it will edit a post */}
+      <MainDialog
+        post={post}
+        open={open}
+        setopen={setopen}
+      />
     </div>
   );
 };
