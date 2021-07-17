@@ -128,19 +128,19 @@ const Comments = () => {
                           UserId
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Id
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Post Id
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Comment
@@ -153,7 +153,7 @@ const Comments = () => {
                         </TableCell>
 
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Action
@@ -163,12 +163,14 @@ const Comments = () => {
                     <TableBody>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">JohnDeo001</TableCell>
+                        <TableCell align="right">001</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         {/* check this one for after maxwidth it will new on new line/text wrap */}
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
 
                         <TableCell align="right">
                           <ButtonGroup orientation="horizontal">
@@ -191,11 +193,14 @@ const Comments = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
+                      <TableCell align="right">JohnDeo001</TableCell>
+                        <TableCell align="right">001</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        {/* check this one for after maxwidth it will new on new line/text wrap */}
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
 
                         <TableCell align="right">
                           <ButtonGroup orientation="horizontal">

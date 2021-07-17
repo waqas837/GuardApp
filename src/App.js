@@ -9,12 +9,13 @@ import Alerts from "./AdminPanel/Alerts";
 import SearchIncidents from "./AdminPanel/SearchIncidents";
 import Comments from "./AdminPanel/Comments";
 import Notifications from "./AdminPanel/Notifications";
+import Dashboard from "./AdminPanel/Dashboard";
 function App() {
   return (
     <div>
       <Router>
         <Route exact path="/">
-          <EditProfile />
+          <Dashboard/>
         </Route>
         <Route exact path="/searchUser">
           <SearchUser/>
@@ -37,6 +38,13 @@ function App() {
         <Route exact path="/notifications">
          <Notifications/>
         </Route>
+        <Route exact path="/setting">
+         <EditProfile/>
+        </Route>
+        {/* map test */}
+        {/* <Route exact path="/google">
+         <GoogleMapMarkerTest/>
+        </Route> */}
       </Router>
     </div>
   );

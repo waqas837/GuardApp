@@ -135,7 +135,7 @@ const UserList = () => {
                           FullName
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Email
@@ -159,7 +159,7 @@ const UserList = () => {
                           AboutUser
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Last Login
@@ -171,7 +171,7 @@ const UserList = () => {
                           Status
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Action
@@ -181,13 +181,17 @@ const UserList = () => {
                     <TableBody>
                       {/* row */}
                       <TableRow>
+                        <TableCell align="right">JohnDeo001</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">JohnDeo@gamail.com</TableCell>
+                        <TableCell align="right">00000000000</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
                         <TableCell align="right">
                           <Button
                             size="small"
@@ -218,13 +222,17 @@ const UserList = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
+                      <TableCell align="right">JohnDeo001</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">JohnDeo@gamail.com</TableCell>
+                        <TableCell align="right">00000000000</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
                         <TableCell align="right">
                           <Button
                             size="small"

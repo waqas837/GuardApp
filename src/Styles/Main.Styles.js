@@ -28,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 160,
     marginTop:"-15px"
   },
+  card:{
+    width:"230px",
+    [theme.breakpoints.down('sm')]:{
+      marginLeft:"-70px"
+    }
+  }
 }));
 
 export { Maingrey, MainCyan, useStyles };

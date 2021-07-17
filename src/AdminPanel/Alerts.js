@@ -22,6 +22,7 @@ import {
   DialogActions,
   OutlinedInput,
 } from "@material-ui/core";
+import dummyimg from "../images/download.jpg"
 import {
   Add,
   CheckCircleOutline,
@@ -132,25 +133,25 @@ const Alerts = () => {
                           UserId
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Id
                         </TableCell>
                         <TableCell
-                          align="right"
+                           
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Title
                         </TableCell>
                         <TableCell
-                          align="right"
+                           
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Location
                         </TableCell>
                         <TableCell
-                          align="right"
+                         
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Incident Type
@@ -162,13 +163,13 @@ const Alerts = () => {
                           Camera
                         </TableCell>
                         <TableCell
-                          align="right"
+                         
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Time of Post
+                           Post Time
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="left"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Action
@@ -178,13 +179,32 @@ const Alerts = () => {
                     <TableBody>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell align="right">John@gmail.com</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">
+                        <Grid container>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            </Grid>
+                        </TableCell>
+                        <TableCell  >00:00 AM</TableCell>
 
                         <TableCell align="right">
                           <Button
@@ -198,13 +218,32 @@ const Alerts = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                      <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell align="right">John@gmail.com</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell align="right">
+                        <Grid container>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
+                            </Grid>
+                            </Grid>
+                        </TableCell>
+                        <TableCell  >00:00 AM</TableCell>
 
                         <TableCell align="right">
                           <Button

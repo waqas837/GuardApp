@@ -1,5 +1,6 @@
 import React from "react";
 import { MainCyan, Maingrey } from "../Styles/Main.Styles";
+import { NavLink } from "react-router-dom";
 import FixedDrawer from "../Drawer/FixedDrawer";
 import {
   AppBar,
@@ -10,6 +11,7 @@ import {
   Toolbar,
 } from "@material-ui/core";
 import { Menu, Search, Settings } from "@material-ui/icons";
+import { grey } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -72,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  activeLink:{
+    borderBottom:`2px solid ${MainCyan}`,
+    borderRadius:"0px",
+    background:grey[50],
+  }
 }));
 
 const Navbar = () => {
@@ -109,7 +116,12 @@ const Navbar = () => {
             //   boxShadow: "0 1px 2px rgb(0 0 0 / 0.2)",
             // }}
           >
-            <IconButton>
+            <IconButton
+              component={NavLink}
+              to="/setting"
+              exact
+              activeClassName={classes.activeLink}
+            >
               <Settings fontSize="small" style={{ color: MainCyan }} />
             </IconButton>
           </Box>

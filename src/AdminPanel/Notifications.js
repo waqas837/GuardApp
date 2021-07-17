@@ -121,25 +121,20 @@ const Notifications = () => {
                           UserId
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Id
                         </TableCell>
+              
                         <TableCell
-                          align="right"
-                          style={{ color: MainCyan, fontWeight: "bold" }}
-                        >
-                          Post Id
-                        </TableCell>
-                        <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Details
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Location
@@ -153,7 +148,7 @@ const Notifications = () => {
                         </TableCell>
 
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Action
@@ -163,13 +158,15 @@ const Notifications = () => {
                     <TableBody>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
                         {/* check this one for after maxwidth it will new on new line/text wrap */}
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell >This is post location</TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
+                        
 
                         <TableCell align="right">
                           <Button
@@ -183,12 +180,14 @@ const Notifications = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                      <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        {/* check this one for after maxwidth it will new on new line/text wrap */}
+                        <TableCell >This is post location</TableCell>
+                        <TableCell align="right">00:00 AM</TableCell>
 
                         <TableCell align="right">
                           <Button

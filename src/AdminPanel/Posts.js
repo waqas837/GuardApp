@@ -147,43 +147,43 @@ const Posts = () => {
                           UserId
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Id
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Title
                         </TableCell>
                         <TableCell
-                          align="right"
+                           
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Location
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Incident Type
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Camera
                         </TableCell>
                         <TableCell
-                          align="right"
+                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Time of Post
+                          Time Post
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Action
@@ -193,11 +193,15 @@ const Posts = () => {
                     <TableBody>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell  style={{fontSize:"10px"}}>This is psot location</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
                         <TableCell align="right">
                           <Grid container>
                             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -214,9 +218,9 @@ const Posts = () => {
                             </Grid>
                           </Grid>
                         </TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell >00:00 AM</TableCell>
 
-                        <TableCell align="right">
+                        <TableCell  align="right">
                           <ButtonGroup orientation="horizontal">
                             <Button
                               size="small"
@@ -243,11 +247,15 @@ const Posts = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">John001</TableCell>
+                        <TableCell align="right">001</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
+                        <TableCell style={{fontSize:"10px"}}>This is psot location</TableCell>
+                        <TableCell style={{fontSize:"10px"}}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        </TableCell>
                         <TableCell align="right">
                         <Grid container>
                             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -264,7 +272,7 @@ const Posts = () => {
                             </Grid>
                           </Grid>
                         </TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
+                        <TableCell align="right">12:12 AM</TableCell>
 
                         <TableCell align="right">
                           <ButtonGroup orientation="horizontal">
