@@ -141,7 +141,7 @@ const UserList = () => {
                           Email
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Phone No.

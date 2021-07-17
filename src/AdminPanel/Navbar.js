@@ -9,15 +9,15 @@ import {
   InputBase,
   makeStyles,
   Toolbar,
+  Tooltip,
 } from "@material-ui/core";
 import { Menu, Search, Settings } from "@material-ui/icons";
-import { grey } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
   menuButton: {
-    marginLeft:"-20px"
+    marginLeft: "-20px",
   },
   title: {
     display: "none",
@@ -74,27 +74,30 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  activeLink:{
-    borderBottom:`2px solid ${MainCyan}`,
-    borderRadius:"0px",
-    background:grey[50],
-  }
+  activeLink: {
+    borderBottom: `2px solid ${MainCyan}`,
+    borderRadius: "0px",
+  },
 }));
 
 const Navbar = () => {
   const classes = useStyles();
   return (
     <div>
-      <AppBar position="static" color="inherit" elevation={1} style={{height:"60px"}}>
+      <AppBar
+        position="static"
+        color="inherit"
+        elevation={1}
+        style={{ height: "60px" }}
+      >
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
-
             color="inherit"
             aria-label="open drawer"
           >
-            <Menu style={{ color: Maingrey}} />
+            <Menu style={{ color: Maingrey }} />
           </IconButton>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -112,22 +115,24 @@ const Navbar = () => {
           {/* space generator */}
           <Box className={classes.grow}></Box>
           <Box
-            // style={{
-            //   boxShadow: "0 1px 2px rgb(0 0 0 / 0.2)",
-            // }}
+          // style={{
+          //   boxShadow: "0 1px 2px rgb(0 0 0 / 0.2)",
+          // }}
           >
-            <IconButton
-              component={NavLink}
-              to="/setting"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <Settings fontSize="small" style={{ color: MainCyan }} />
-            </IconButton>
+            <Tooltip title="Settings" arrow>
+              <IconButton
+                component={NavLink}
+                to="/setting"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <Settings fontSize="small" style={{ color: MainCyan }} />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
-      <FixedDrawer/>
+      <FixedDrawer />
     </div>
   );
 };

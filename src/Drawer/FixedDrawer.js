@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
   makeStyles,
+  Tooltip,
 } from "@material-ui/core";
 import {
   AssignmentLate,
@@ -47,118 +48,134 @@ const FixedDrawer = () => {
         >
           <List>
             {/* item 1 */}
-            <ListItem
-              button
-              className={classes.marginListItems}
-              component={NavLink}
-              to="/"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <Dashboard fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Dashboard" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                component={NavLink}
+                to="/"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <Dashboard fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
 
             {/* item 2 */}
-            <ListItem
-              button
-              className={classes.marginListItems}
-              component={NavLink}
-              to="/searchUser"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <Person fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Search User" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                component={NavLink}
+                to="/searchUser"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <Person fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* item 3 */}
-            <ListItem
-              button
-              className={classes.marginListItems}
-              component={NavLink}
-              to="/userlist"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <FormatListBulleted fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="User List" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                component={NavLink}
+                to="/userlist"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <FormatListBulleted fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* item 4 */}
-            <ListItem
-              button
-              className={classes.marginListItems}
-              component={NavLink}
-              to="/posts"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <LocalActivity fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Posts" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                component={NavLink}
+                to="/posts"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <LocalActivity fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* item 5*/}
-            <ListItem
-              button
-              className={classes.marginListItems}
-              component={NavLink}
-              to="/incidents"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <FindInPage fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Incidents" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                component={NavLink}
+                to="/incidents"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <FindInPage fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* item 6 */}
-            <ListItem
-              button
-              component={NavLink}
-              to="/alerts"
-              exact
-              activeClassName={classes.activeLink}
-              className={classes.marginListItems}
-            >
-              <ListItemIcon>
-                <AssignmentLate fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Alerts" arrow>
+              <ListItem
+                button
+                component={NavLink}
+                to="/alerts"
+                exact
+                activeClassName={classes.activeLink}
+                className={classes.marginListItems}
+              >
+                <ListItemIcon>
+                  <AssignmentLate fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* Comment item 7 */}
-            <ListItem
-              button
-              component={NavLink}
-              className={classes.marginListItems}
-              to="/comments"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <Comment fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Comments" arrow>
+              <ListItem
+                button
+                component={NavLink}
+                className={classes.marginListItems}
+                to="/comments"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <Comment fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
             {/* Comment item 8 */}
-            <ListItem
-              button
-              component={NavLink}
-              className={classes.marginListItems}
-              to="/notifications"
-              exact
-              activeClassName={classes.activeLink}
-            >
-              <ListItemIcon>
-                <NotificationsActive fontSize="small" />
-              </ListItemIcon>
-              <ListItemText />
-            </ListItem>
+            <Tooltip title="Notifications" arrow>
+              <ListItem
+                button
+                component={NavLink}
+                className={classes.marginListItems}
+                to="/notifications"
+                exact
+                activeClassName={classes.activeLink}
+              >
+                <ListItemIcon>
+                  <NotificationsActive fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
           </List>
         </Drawer>
       </Container>
