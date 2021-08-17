@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { AdminFetchAllUsers } from "../AdminApi";
 import {
   Box,
   Container,
@@ -22,8 +24,9 @@ import {
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
-import MainDialog from "./MainDialog"
+import MainDialog from "./MainDialog";
 import {
+  Add,
   CheckCircleOutline,
   ErrorOutline,
   PictureAsPdf,
@@ -33,19 +36,42 @@ import Navbar from "./Navbar";
 
 const UserList = () => {
   const classes = useStyles();
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
+  // const headers = {
+  //   Authorization:
+  //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiKzkyIiwibnVtYmVyIjoiMzE2NTk4OTkyNCIsIm9wdFZhbGlkYXRpb24iOnRydWUsIm90cCI6Ijg4OTkiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE2MjgyNTcxODJ9.G0P_VwmgB4Kicboya_ctGQa2H9rO2y36DJmyMJkDLzk",
+  // };
+  // // Get all users
+  // const fetchUsers = async () => {
+  //   try {
+  //     const resp = await axios.get(`${getUsers}`, { headers });
+  //     console.log(resp);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const [age, setAge] = React.useState("");
   const [open, setopen] = React.useState(false);
   const [delet, setdelet] = React.useState(false);
   const [opentwo, setopentwo] = React.useState(false);
   const [user, setuser] = React.useState("NoSelection");
+
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  // 0.add a user
+  const AddUser = () => {
+    setopen(true);
+    setuser("AddUser");
+  };
+
   // 1.edit a user
-  const editUser = () =>{
-    setopen(true)
-    setuser("EditUser")
-  }
+  const editUser = () => {
+    setopen(true);
+    setuser("EditUser");
+  };
   //   close both dialogs
   const closeBothDialogs = () => {
     setopen(false);
@@ -107,7 +133,11 @@ const UserList = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-                
+                {/* add new user icon */}
+                <IconButton onClick={AddUser}>
+                  <Add fontSize="small" style={{ color: MainCyan }} />
+                </IconButton>
+
                 {/* pdf icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
@@ -159,7 +189,6 @@ const UserList = () => {
                           AboutUser
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Last Login
@@ -185,11 +214,15 @@ const UserList = () => {
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo@gamail.com</TableCell>
                         <TableCell align="right">00000000000</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        <TableCell style={{ fontSize: "10px" }}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Consectetur, aliquid, error commodi expedita,
+                          sit tempore recusandae eum illo labore ipsa modi ea.
                         </TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        <TableCell style={{ fontSize: "10px" }}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Consectetur, aliquid, error commodi expedita,
+                          sit tempore recusandae eum illo labore ipsa modi ea.
                         </TableCell>
                         <TableCell align="right">00:00 AM</TableCell>
                         <TableCell align="right">
@@ -222,15 +255,19 @@ const UserList = () => {
                       </TableRow>
                       {/* row */}
                       <TableRow>
-                      <TableCell align="right">JohnDeo001</TableCell>
+                        <TableCell align="right">JohnDeo001</TableCell>
                         <TableCell align="right">JohnDeo</TableCell>
                         <TableCell align="right">JohnDeo@gamail.com</TableCell>
                         <TableCell align="right">00000000000</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        <TableCell style={{ fontSize: "10px" }}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Consectetur, aliquid, error commodi expedita,
+                          sit tempore recusandae eum illo labore ipsa modi ea.
                         </TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
+                        <TableCell style={{ fontSize: "10px" }}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Consectetur, aliquid, error commodi expedita,
+                          sit tempore recusandae eum illo labore ipsa modi ea.
                         </TableCell>
                         <TableCell align="right">00:00 AM</TableCell>
                         <TableCell align="right">
@@ -343,7 +380,7 @@ const UserList = () => {
         </DialogActions>
       </Dialog>
       {/* edit user dialog */}
-      <MainDialog user={user} open={open} setopen={setopen}/>
+      <MainDialog user={user} open={open} setopen={setopen} />
     </div>
   );
 };

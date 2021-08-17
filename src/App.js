@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import EditProfile from "./AdminPanel/EditProfile";
 import SearchUser from "./AdminPanel/SearchUser";
 import UserList from "./AdminPanel/UserList";
@@ -10,42 +10,34 @@ import SearchIncidents from "./AdminPanel/SearchIncidents";
 import Comments from "./AdminPanel/Comments";
 import Notifications from "./AdminPanel/Notifications";
 import Dashboard from "./AdminPanel/Dashboard";
+import AdminLogin from "./AdminPanel/AdminLogin";
+import Error from "./Error";
+import GoogleMapMarkersTest from "./GoogleMaps/GoogleMapMarkersTest";
+import Home from "./Test/Home";
+import Map from "./Test/Map";
+import Paractice from "./Paractice";
 function App() {
   return (
     <div>
-      <Router>
-        <Route exact path="/">
-          <Dashboard/>
-        </Route>
-        <Route exact path="/searchUser">
-          <SearchUser/>
-        </Route>
-        <Route exact path="/userList">
-          <UserList/>
-        </Route>
-        <Route exact path="/posts">
-          <Posts/>
-        </Route>
-        <Route exact path="/alerts">
-         <Alerts/>
-        </Route>
-        <Route exact path="/incidents">
-         <SearchIncidents/>
-        </Route>
-        <Route exact path="/comments">
-         <Comments/>
-        </Route>
-        <Route exact path="/notifications">
-         <Notifications/>
-        </Route>
-        <Route exact path="/setting">
-         <EditProfile/>
-        </Route>
-        {/* map test */}
-        {/* <Route exact path="/google">
-         <GoogleMapMarkerTest/>
-        </Route> */}
-      </Router>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/searchUser" component={SearchUser} />
+          <Route exact path="/userList" component={UserList} />
+          <Route exact path="/posts" component={Posts} />
+          <Route exact path="/alerts" component={Alerts} />
+          <Route exact path="/incidents" component={SearchIncidents} />
+          <Route exact path="/comments" component={Comments} />
+          <Route exact path="/notifications" component={Notifications} />
+          <Route exact path="/setting" component={EditProfile} />
+          <Route exact path="/admin" component={AdminLogin} />
+          <Route path="*" component={Error} />
+          {/* map test */}
+          <Route exact path="/googlemap" component={Map} />
+          {/* paracitcie */}
+          <Route exact path="/p" component={Paractice} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

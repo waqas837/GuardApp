@@ -9,7 +9,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import userimg from "../images/download.jpg";
-import locationimg from "../images/locationimage.png";
+import GoogleMapMarkerTest from "../GoogleMaps/GoogleMapMarkerTest"
 import { grey } from "@material-ui/core/colors";
 import { Add, PictureAsPdf } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
@@ -232,9 +232,9 @@ const SearchIncidents = () => {
                       </Box>
                     </Grid>
                     {/* map coloumn */}
-                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
                         <Container maxWidth="sm">
-                        <img width="140%" height="400px" src={locationimg} alt=""/>
+                      <GoogleMapMarkerTest/>
                         </Container>
                     </Grid>
                   </Grid>

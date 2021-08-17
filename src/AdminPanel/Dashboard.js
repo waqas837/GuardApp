@@ -9,11 +9,11 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import Markers from "../GoogleMaps/Markers"
+ import React from "react";
 import Navbar from "./Navbar";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
 import dummyimg from "../images/download.jpg";
-import dummylocation from "../images/locationimage.png";
 import {
   AccountCircle,
   Assistant,
@@ -219,15 +219,17 @@ const Dashboard = () => {
           {/* main line 2 */}
           <Grid container>
             {/* locaiton grid */}
-            <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
               <Box my={2}>
-                <img src={dummylocation} width="100%" height="auto" alt="" />
+                <Container maxWidth="sm">
+                <Markers/>
+                </Container>
               </Box>
             </Grid>
 
             {/* team members */}
             <Box>
-              <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+              <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                 <Box mt={3} ml={9}>
                   <Card classes={{ root: classes.card }}>
                     <Typography style={{ color: MainCyan }} variant="h6">

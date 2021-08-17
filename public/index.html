@@ -24,6 +24,9 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <!-- first script for google map -->
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <title>React App</title>
   </head>
   <body>
@@ -39,5 +42,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- second step for google maps with api key -->
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCccVle225nxVsChsR9cGh-Tz1wLvKgeT8&callback=initMap&libraries=places&v=weekly"
+      async
+    ></script>
   </body>
 </html>

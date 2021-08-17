@@ -208,7 +208,7 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {" "}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}
@@ -242,7 +242,7 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {" "}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}
@@ -276,7 +276,7 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {" "}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}
@@ -310,7 +310,7 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {" "}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}
@@ -344,7 +344,7 @@ const EditProfile = () => {
                         <Grid xs={12} sm={6} md={4} lg={6} xl={6}>
                           <Box mt={-1} textAlign="right">
                             {" "}
-                            <IconButton onClick={() => setopen(true)}>
+                            <IconButton onClick={editMember}>
                               <Edit
                                 fontSize="small"
                                 style={{ color: MainCyan }}

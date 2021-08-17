@@ -1,11 +1,20 @@
-import React from 'react'
-import GoogleMapMarkerTest from './GoogleMapMarkerTest'
+import React, { useState, useEffect } from "react";
+import GoogleMapMarkerTest from "./GoogleMapMarkerTest";
 const Markers = () => {
-    return (
-        <div>
-            <GoogleMapMarkerTest longitude={124} latitude={122}/>
-        </div>
-    )
-}
+  const [state, setstate] = useState();
+  useEffect(() => {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setstate({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      });
+    }
+  }, []);
+   return (
+    <div> {state?<GoogleMapMarkerTest state={state} />:null}</div>
+  );
+};
 
-export default Markers
+export default Markers;

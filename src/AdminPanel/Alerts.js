@@ -29,7 +29,6 @@ import {
   ErrorOutline,
   HighlightOff,
   PictureAsPdf,
-  Search,
 } from "@material-ui/icons";
 import React from "react";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";

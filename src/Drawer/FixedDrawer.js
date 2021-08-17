@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 import {
   Container,
   Drawer,
@@ -19,6 +21,7 @@ import {
   FormatListBulleted,
   Comment,
   FindInPage,
+  ExitToApp,
 } from "@material-ui/icons";
 import { MainCyan } from "../Styles/Main.Styles";
 import { grey } from "@material-ui/core/colors";
@@ -37,6 +40,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 const FixedDrawer = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [refresh, setrefresh] = useState(false);
+  useEffect(() => {
+    if (!Cookies.get("admin")) {
+      history.push("/admin");
+    }
+  }, [refresh]);
+  // logout admin
+  const logout = () => {
+    Cookies.remove("admin");
+    setrefresh(!refresh);
+  };
   return (
     <div>
       <Container>
@@ -172,6 +187,20 @@ const FixedDrawer = () => {
               >
                 <ListItemIcon>
                   <NotificationsActive fontSize="small" />
+                </ListItemIcon>
+                <ListItemText />
+              </ListItem>
+            </Tooltip>
+            {/* logout user */}
+            {/* Comment item 8 */}
+            <Tooltip title="Logout" arrow>
+              <ListItem
+                button
+                className={classes.marginListItems}
+                onClick={logout}
+              >
+                <ListItemIcon>
+                  <ExitToApp fontSize="small" />
                 </ListItemIcon>
                 <ListItemText />
               </ListItem>

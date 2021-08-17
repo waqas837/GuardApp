@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Typography,
   Box,
@@ -9,7 +9,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import userimg from "../images/download.jpg";
-import locationimg from "../images/locationimage.png";
+import Markers from "../GoogleMaps/Markers"
 import { grey } from "@material-ui/core/colors";
 import { PictureAsPdf } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
@@ -229,9 +229,9 @@ const SearchUser = () => {
                       </Box>
                     </Grid>
                     {/* map coloumn */}
-                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <Container maxWidth="sm">
-                        <img width="140%" height="400px" src={locationimg} alt=""/>
+                    <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+                        <Container>
+                        <Markers/>
                         </Container>
                     </Grid>
                   </Grid>
