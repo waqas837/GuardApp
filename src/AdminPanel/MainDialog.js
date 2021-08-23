@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import mapimg from "../images/locationimage.png";
+import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 import dummyimg from "../images/download.jpg";
 import axios from "axios";
-import { AddNewUser } from "../AdminApi.js";
+import { addNewUser,imageUploadForUsers } from "../AdminApi.js";
 import {
   Box,
   Button,
@@ -14,14 +15,13 @@ import {
   IconButton,
   OutlinedInput,
   Typography,
-  Input,
   Grid,
   MenuItem,
   FormControl,
   InputLabel,
   Select,
 } from "@material-ui/core";
-import { EmailOutlined, HighlightOff } from "@material-ui/icons";
+import { EmailOutlined, HighlightOff, LocationOn } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
 // just remember that: if postCheck is true it will add a post ,else edit a post
 const AddAndEditMemberDialog = ({
@@ -31,18 +31,31 @@ const AddAndEditMemberDialog = ({
   post,
   comment,
   member,
+  refresh,
+  setrefresh,
 }) => {
   const headers = {
     authorization: `Bearer ${Cookies.get("admin")}`,
   };
 
   const [state, setstate] = useState([]);
+  
   // 1.Admin adding a new user
   const AddUserByAdmin = async () => {
     try {
-      const { data } = await axios.post(`${AddNewUser}`, state, { headers });
+      const { data } = await axios.post(`${addNewUser}`, state, {
+        headers,
+      });
       console.log(data);
+      if (data.success) {
+        setrefresh(!refresh);
+        toast.success("User data added successfully");
+        setopen(false);
+      }
+      // console.log(data);
     } catch (e) {
+      toast.error("Please Fill the fields with correct format and try again!");
+      setopen(false);
       throw e;
     }
   };
@@ -50,11 +63,29 @@ const AddAndEditMemberDialog = ({
   const classes = useStyles();
   // console.log(postCheck);
   const [age, setAge] = React.useState("");
+  
+  // select
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  //getLocation
+  const getLocation = () => {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setstate({
+          ...state,
+          location: {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          },
+        });
+      });
+      toast.success("Location saved go to next step!");
+    }
+  };
   return (
     <div>
+      <Toaster />
       {/* main dialog box */}
       <Dialog open={open} onClose={() => setopen(false)}>
         <DialogTitle>
@@ -220,7 +251,9 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        onChange={(e)=>setstate({...state,username:e.target.value})}
+                        onChange={(e) =>
+                          setstate({ ...state, username: e.target.value })
+                        }
                         placeholder="Username"
                         fullWidth
                         className={classes.input}
@@ -231,8 +264,10 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        onChange={(e)=>setstate({...state,fullname:e.target.value})}
-                        placeholder="Fullname"
+                        onChange={(e) =>
+                          setstate({ ...state, firstname: e.target.value })
+                        }
+                        placeholder="FirstName"
                         fullWidth
                         className={classes.input}
                       />
@@ -242,7 +277,35 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        onChange={(e)=>setstate({...state,email:e.target.value})}
+                        onChange={(e) =>
+                          setstate({ ...state, lastname: e.target.value })
+                        }
+                        placeholder="Last Name"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, code: e.target.value })
+                        }
+                        placeholder="Code"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, email: e.target.value })
+                        }
                         placeholder="Email address"
                         fullWidth
                         endAdornment={
@@ -259,7 +322,9 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        onChange={(e)=>setstate({...state,phone:e.target.value})}
+                        onChange={(e) =>
+                          setstate({ ...state, phone: e.target.value })
+                        }
                         placeholder="Phone No"
                         fullWidth
                         className={classes.input}
@@ -270,32 +335,101 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        onChange={(e)=>setstate({...state,username:e.target.value})}
-                        placeholder="About Me"
+                        onChange={(e) =>
+                          setstate({ ...state, number: e.target.value })
+                        }
+                        placeholder="Number"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="Role Type"
+                        onChange={(e) =>
+                          setstate({ ...state, country: e.target.value })
+                        }
+                        placeholder="Country Name"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="Password"
-                        onChange={(e)=>setstate({...state,password:e.target.value})}
+                        onChange={(e) =>
+                          setstate({ ...state, city: e.target.value })
+                        }
+                        placeholder="City Name"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        type="number"
+                        onChange={(e) =>
+                          setstate({ ...state, incidents: e.target.value })
+                        }
+                        placeholder="Incidents"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, about: e.target.value })
+                        }
+                        placeholder="About"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, address: e.target.value })
+                        }
+                        placeholder="Address"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <Button
+                        startIcon={
+                          <LocationOn
+                            fontSize="small"
+                            style={{ color: MainCyan }}
+                          />
+                        }
+                        variant="outlined"
+                        onClick={getLocation}
+                        fullWidth
+                        style={{ borderRadius: 20 }}
+                      >
+                        Get User Location
+                      </Button>
+                    </Container>
+                  </Box>
+
                   <Box>
                     <Container>
                       <Button

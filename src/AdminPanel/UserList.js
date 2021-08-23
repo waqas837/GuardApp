@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { AdminFetchAllUsers } from "../AdminApi";
+import {
+  getdummydata,
+  DeletSingleUser,
+  imageUploadForUsers,
+  serverImagePath,
+} from "../AdminApi";
+import toast, { Toaster } from "react-hot-toast";
 import {
   Box,
   Container,
@@ -23,6 +29,7 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
+  Menu,
 } from "@material-ui/core";
 import MainDialog from "./MainDialog";
 import {
@@ -33,30 +40,69 @@ import {
 } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
 import Navbar from "./Navbar";
+import Cookies from "js-cookie";
 
 const UserList = () => {
   const classes = useStyles();
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, []);
+  const [state, setstate] = useState(undefined);
+  const [refresh, setrefresh] = useState(false);
+  const [id, setid] = useState(undefined);
+  const cookies = Cookies.get("admin");
+  const headers = {
+    authorization: `Bearer ${cookies}`,
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, [refresh]);
   // const headers = {
   //   Authorization:
   //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiKzkyIiwibnVtYmVyIjoiMzE2NTk4OTkyNCIsIm9wdFZhbGlkYXRpb24iOnRydWUsIm90cCI6Ijg4OTkiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE2MjgyNTcxODJ9.G0P_VwmgB4Kicboya_ctGQa2H9rO2y36DJmyMJkDLzk",
   // };
-  // // Get all users
-  // const fetchUsers = async () => {
-  //   try {
-  //     const resp = await axios.get(`${getUsers}`, { headers });
-  //     console.log(resp);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const deleteSingleUser = (id) => {
+    setdelet(true);
+    setid(id);
+  };
+  // Get all users
+  const fetchUsers = async () => {
+    try {
+      const { data } = await axios.get(`${getdummydata}`, { headers });
+      console.log(data.getUsers);
+      setstate(data.getUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const [age, setAge] = React.useState("");
   const [open, setopen] = React.useState(false);
   const [delet, setdelet] = React.useState(false);
   const [opentwo, setopentwo] = React.useState(false);
+  const [valueselect, setvalueselect] = React.useState("");
   const [user, setuser] = React.useState("NoSelection");
+
+  const [file, setfile] = useState([]);
+
+  // onChangeFile
+  const onChangeFile = (e) => {
+    setfile(e.target.files[0]);
+  };
+  console.log(file);
+  // 0.uploadImage
+  const uploadImage = async (e, userid) => {
+    e.preventDefault();
+    const fdata = new FormData();
+    fdata.append("image", file);
+    const { data } = await axios.patch(
+      `${imageUploadForUsers(userid)}`,
+      fdata,
+      {
+        headers,
+      }
+    );
+    if (data.success) {
+      setrefresh(!refresh);
+      toast.success("Image uploaded successfully");
+    }
+  };
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -78,14 +124,35 @@ const UserList = () => {
     setopentwo(false);
   };
   //open only one dialog
-  const openOneDialog = () => {
+  const openOneDialog = async () => {
     setdelet(false);
-    setopentwo(true);
+    try {
+      const { data } = await axios.delete(`${DeletSingleUser(id)}`, {
+        headers,
+      });
+      // console.log(data);
+      if (data.success) {
+        setopen(false);
+        setopentwo(true);
+        setrefresh(!refresh);
+      } else if (!data.success) {
+        toast.error(`${data.message}`);
+        setopen(false);
+      }
+    } catch (error) {
+      toast.error("Data delete failed!");
+      console.log(error);
+    }
+  };
+  // onChangeStatusSelect
+  const onChangeStatusSelect = (e) => {
+    setvalueselect(e.target.value);
   };
   return (
     <div>
       {/* navbar */}
       <Navbar />
+      <Toaster />
       <Box mt={5} className={classes.resposiveFromSide}>
         <Container maxWidth="md">
           {/* line 0 */}
@@ -159,11 +226,19 @@ const UserList = () => {
                           Username
                         </TableCell>
                         <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          FullName
+                          FirstName
                         </TableCell>
+
+                        <TableCell
+                          align="center"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Last Name
+                        </TableCell>
+
                         <TableCell
                           align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
@@ -171,34 +246,68 @@ const UserList = () => {
                           Email
                         </TableCell>
                         <TableCell
-                          align="center"
+                          align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          Phone No.
+                          Phone
                         </TableCell>
                         <TableCell
                           align="right"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Code
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Country
+                        </TableCell>
+                        <TableCell
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          About
+                        </TableCell>
+
+                        <TableCell
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          City
+                        </TableCell>
+
+                        <TableCell
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Address
                         </TableCell>
+
                         <TableCell
                           align="right"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
-                          AboutUser
+                          Image
                         </TableCell>
+
                         <TableCell
-                          style={{ color: MainCyan, fontWeight: "bold" }}
-                        >
-                          Last Login
-                        </TableCell>
-                        <TableCell
-                          align="right"
+                          align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Status
                         </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Incidents
+                        </TableCell>
+
+                        {/* <TableCell
+                          align="right"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Location
+                        </TableCell> */}
+
                         <TableCell
                           align="center"
                           style={{ color: MainCyan, fontWeight: "bold" }}
@@ -209,96 +318,93 @@ const UserList = () => {
                     </TableHead>
                     <TableBody>
                       {/* row */}
-                      <TableRow>
-                        <TableCell align="right">JohnDeo001</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo@gamail.com</TableCell>
-                        <TableCell align="right">00000000000</TableCell>
-                        <TableCell style={{ fontSize: "10px" }}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Consectetur, aliquid, error commodi expedita,
-                          sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell style={{ fontSize: "10px" }}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Consectetur, aliquid, error commodi expedita,
-                          sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell align="right">00:00 AM</TableCell>
-                        <TableCell align="right">
-                          <Button
-                            size="small"
-                            className={classes.buttonStyleOutlined}
-                          >
-                            Block
-                          </Button>
-                        </TableCell>
+                      {state &&
+                        state.map((val) => (
+                          <TableRow>
+                            <TableCell align="right">{val.username}</TableCell>
+                            <TableCell align="right">{val.firstname}</TableCell>
+                            <TableCell align="right">{val.lastname}</TableCell>
+                            <TableCell align="right">{val.email}</TableCell>
+                            <TableCell style={{ fontSize: "10px" }}>
+                              {val.phone}
+                            </TableCell>
+                            <TableCell style={{ fontSize: "10px" }}>
+                              {val.code}
+                            </TableCell>
+                            <TableCell align="right">{val.country}</TableCell>
+                            <TableCell align="right">{val.about}</TableCell>
+                            <TableCell align="right">{val.city}</TableCell>
+                            <TableCell align="right">{val.address}</TableCell>
+                            <TableCell align="center">
+                              {val.image ? (
+                                <img
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    borderRadius: 30,
+                                  }}
+                                  src={`${serverImagePath}${val.image}`}
+                                  alt=""
+                                />
+                              ) : (
+                                <form
+                                  encType="multipart/form-data"
+                                  onSubmit={(e) => uploadImage(e, val._id)}
+                                >
+                                  <input
+                                    type="file"
+                                    name="image"
+                                    onChange={onChangeFile}
+                                  />
+                                  <input type="submit" />
+                                </form>
+                              )}
+                            </TableCell>
+                            {/* <TableCell align="right">{val.location}</TableCell> */}
 
-                        <TableCell align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                              onClick={editUser}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
-                        </TableCell>
-                      </TableRow>
-                      {/* row */}
-                      <TableRow>
-                        <TableCell align="right">JohnDeo001</TableCell>
-                        <TableCell align="right">JohnDeo</TableCell>
-                        <TableCell align="right">JohnDeo@gamail.com</TableCell>
-                        <TableCell align="right">00000000000</TableCell>
-                        <TableCell style={{ fontSize: "10px" }}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Consectetur, aliquid, error commodi expedita,
-                          sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell style={{ fontSize: "10px" }}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Consectetur, aliquid, error commodi expedita,
-                          sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell align="right">00:00 AM</TableCell>
-                        <TableCell align="right">
-                          <Button
-                            size="small"
-                            variant="contained"
-                            className={classes.buttonStyle}
-                          >
-                            Approve
-                          </Button>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                              onClick={editUser}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
-                        </TableCell>
-                      </TableRow>
+                            <TableCell>
+                              <FormControl style={{ minWidth: 120 }}>
+                                <InputLabel>Select status</InputLabel>
+                                <Select
+                                  onChange={onChangeStatusSelect}
+                                  value={valueselect}
+                                >
+                                  <MenuItem value={"verified"} button>
+                                    Verify
+                                  </MenuItem>
+                                  <MenuItem value={"unverified"} button>
+                                    Unverify
+                                  </MenuItem>
+                                  <MenuItem value={"deleted"} button>
+                                    Delete
+                                  </MenuItem>
+                                </Select>
+                              </FormControl>
+                            </TableCell>
+                            {/* <TableCell align="right">{val.type}</TableCell> */}
+                            <TableCell align="center">
+                              {val.incidents}
+                            </TableCell>
+                            <TableCell align="right">
+                              <ButtonGroup orientation="horizontal">
+                                <Button
+                                  size="small"
+                                  className={classes.buttonStyle}
+                                  onClick={editUser}
+                                >
+                                  Edit
+                                </Button>
+                                <Button
+                                  size="small"
+                                  className={classes.buttonStyleOutlined}
+                                  onClick={() => deleteSingleUser(val._id)}
+                                >
+                                  Delete
+                                </Button>
+                              </ButtonGroup>
+                            </TableCell>
+                          </TableRow>
+                        ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -380,7 +486,13 @@ const UserList = () => {
         </DialogActions>
       </Dialog>
       {/* edit user dialog */}
-      <MainDialog user={user} open={open} setopen={setopen} />
+      <MainDialog
+        user={user}
+        open={open}
+        setopen={setopen}
+        refresh={refresh}
+        setrefresh={setrefresh}
+      />
     </div>
   );
 };
