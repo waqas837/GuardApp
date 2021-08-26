@@ -5,7 +5,7 @@ import {
   DeletSingleUser,
   imageUploadForUsers,
   serverImagePath,
-} from "../AdminApi";
+} from "../Api/AdminUserApi";
 import toast, { Toaster } from "react-hot-toast";
 import {
   Box,
@@ -47,6 +47,7 @@ const UserList = () => {
   const [state, setstate] = useState(undefined);
   const [refresh, setrefresh] = useState(false);
   const [id, setid] = useState(undefined);
+  const [ComparedData, setComparedData] = useState(undefined);
   const cookies = Cookies.get("admin");
   const headers = {
     authorization: `Bearer ${cookies}`,
@@ -85,7 +86,7 @@ const UserList = () => {
   const onChangeFile = (e) => {
     setfile(e.target.files[0]);
   };
-  console.log(file);
+  // console.log(file);
   // 0.uploadImage
   const uploadImage = async (e, userid) => {
     e.preventDefault();
@@ -114,9 +115,12 @@ const UserList = () => {
   };
 
   // 1.edit a user
-  const editUser = () => {
+  const editUser = (dataId) => {
     setopen(true);
     setuser("EditUser");
+    const compareData = state.find((val) => val._id === dataId);
+    console.log(compareData);
+    setComparedData(compareData);
   };
   //   close both dialogs
   const closeBothDialogs = () => {
@@ -336,7 +340,7 @@ const UserList = () => {
                             <TableCell align="right">{val.city}</TableCell>
                             <TableCell align="right">{val.address}</TableCell>
                             <TableCell align="center">
-                              {val.image ? (
+                              {val.image !== "placeholder.jpg" ? (
                                 <img
                                   style={{
                                     width: "50px",
@@ -390,7 +394,7 @@ const UserList = () => {
                                 <Button
                                   size="small"
                                   className={classes.buttonStyle}
-                                  onClick={editUser}
+                                  onClick={() => editUser(val._id)}
                                 >
                                   Edit
                                 </Button>
@@ -485,13 +489,14 @@ const UserList = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* edit user dialog */}
+      {/*dialog */}
       <MainDialog
         user={user}
         open={open}
         setopen={setopen}
         refresh={refresh}
         setrefresh={setrefresh}
+        ComparedDataToEdit={ComparedData}
       />
     </div>
   );

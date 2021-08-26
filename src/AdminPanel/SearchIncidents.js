@@ -9,7 +9,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import userimg from "../images/download.jpg";
-import GoogleMapMarkerTest from "../GoogleMaps/GoogleMapMarkerTest"
+import Markers from "../GoogleMaps/Markers";
 import { grey } from "@material-ui/core/colors";
 import { Add, PictureAsPdf } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
@@ -37,8 +37,8 @@ const SearchIncidents = () => {
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
-                 {/* add icon */}
-                 <IconButton>
+                {/* add icon */}
+                <IconButton>
                   <Add fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
               </Box>
@@ -89,7 +89,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -111,7 +114,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -133,7 +139,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -155,7 +164,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -177,7 +189,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -199,7 +214,10 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
@@ -221,21 +239,24 @@ const SearchIncidents = () => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                               <Box mt={2}>
-                                <Typography style={{fontWeight:"bold"}} variant="subtitle2">
+                                <Typography
+                                  style={{ fontWeight: "bold" }}
+                                  variant="subtitle2"
+                                >
                                   John Doe
                                 </Typography>
                               </Box>
                             </Grid>
                           </Grid>
                         </Container>
-                         {/* End for adding a grid for profile image and name */}
+                        {/* End for adding a grid for profile image and name */}
                       </Box>
                     </Grid>
                     {/* map coloumn */}
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Container maxWidth="sm">
-                      <GoogleMapMarkerTest/>
-                        </Container>
+                      <Container maxWidth="sm">
+                        <Markers />
+                      </Container>
                     </Grid>
                   </Grid>
                 </Paper>

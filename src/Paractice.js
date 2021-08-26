@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import { MainContext } from "./AdminPanel/Context/ContextApi";
 import "./paractice.css";
 const Paractice = () => {
   useEffect(() => {
     initMap();
   }, []);
+  const { setlnglat, lnglat } = useContext(MainContext);
   const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let labelIndex = 0;
+  const myLatlng = { lat: -25.363, lng: 131.044 };
   function initMap() {
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: { lat: 40.749933, lng: -73.98633 },
@@ -120,7 +124,29 @@ const Paractice = () => {
       }
       input.value = "";
     });
+    let infoWindow = new window.google.maps.InfoWindow({
+      // content: "Click the map to get Lat/Lng!",
+      position: myLatlng,
+    });
+    // infoWindow.open(map);
+    // Configure the click listener.
+    map.addListener("click", (mapsMouseEvent) => {
+      // Close the current InfoWindow.
+      // infoWindow.close();
+      // Create a new InfoWindow.
+      infoWindow = new window.google.maps.InfoWindow({
+        position: mapsMouseEvent.latLng,
+      });
+      infoWindow.setContent(
+        JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+      );
+      // infoWindow.open(map);
+      // my desired lng and lat
+
+      setlnglat(mapsMouseEvent.latLng.toJSON(), null, 2);
+    });
   }
+
   return (
     <div>
       <div class="pac-card" id="pac-card">
@@ -157,7 +183,7 @@ const Paractice = () => {
           <input id="pac-input" type="text" placeholder="Enter a location" />
         </div>
       </div>
-      <div id="map" style={{ height: "100vh", width: "100vw" }}></div>
+      <div id="map" style={{ height: "400px", width: "300px" }}></div>
       <div id="infowindow-content">
         <span id="place-name" class="title"></span>
         <br />

@@ -14,7 +14,7 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import { ArrowRight } from "@material-ui/icons";
-import { AdminLogin } from "../AdminApi";
+import { AdminLogin } from "../Api/AdminUserApi";
 import axios from "axios";
 const LoginAdmin = () => {
   axios.defaults.withCredentials = true;

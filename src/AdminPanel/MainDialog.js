@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 import dummyimg from "../images/download.jpg";
 import axios from "axios";
-import { addNewUser,imageUploadForUsers } from "../AdminApi.js";
+import { addNewUser, UpdateUser, UpdateUserImageOnly } from "../Api/AdminUserApi";
 import {
   Box,
   Button,
@@ -28,18 +28,63 @@ const AddAndEditMemberDialog = ({
   open,
   setopen,
   user,
-  post,
+
   comment,
   member,
   refresh,
   setrefresh,
+  ComparedDataToEdit,
 }) => {
   const headers = {
     authorization: `Bearer ${Cookies.get("admin")}`,
   };
 
   const [state, setstate] = useState([]);
-  
+  const [openimg, setopenimg] = useState(false);
+  const [file, setfile] = useState([]);
+
+  // onChangeFile
+  const onChangeFile = (e) => {
+    setfile(e.target.files[0]);
+  };
+  // update image
+  // 0.uploadImage
+  const uploadImage = async (e, userid) => {
+    e.preventDefault();
+    const fdata = new FormData();
+    fdata.append("image", file);
+    const { data } = await axios.patch(
+      `${UpdateUserImageOnly(userid)}`,
+      fdata,
+      {
+        headers,
+      }
+    );
+    if (data.success) {
+      setrefresh(!refresh);
+      toast.success("Image uploaded successfully");
+      setopenimg(false);
+    }
+  };
+  // 0.updateUserByAdmin
+  const updateUserByAdmin = async (userId) => {
+    try {
+      const { data } = await axios.patch(`${UpdateUser(userId)}`, state, {
+        headers,
+      });
+      // console.log(data);
+      if (data.success) {
+        toast.success("Data updated sucessfully");
+        setopen(false);
+        setrefresh(!refresh);
+        setopenimg(true);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("500 Internel Server error");
+      setopen(false);
+    }
+  };
   // 1.Admin adding a new user
   const AddUserByAdmin = async () => {
     try {
@@ -50,6 +95,7 @@ const AddAndEditMemberDialog = ({
       if (data.success) {
         setrefresh(!refresh);
         toast.success("User data added successfully");
+        setstate("");
         setopen(false);
       }
       // console.log(data);
@@ -63,7 +109,7 @@ const AddAndEditMemberDialog = ({
   const classes = useStyles();
   // console.log(postCheck);
   const [age, setAge] = React.useState("");
-  
+
   // select
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -104,20 +150,7 @@ const AddAndEditMemberDialog = ({
                 </Typography>
               );
             }
-            if (post === "EditPost") {
-              return (
-                <Typography style={{ fontWeight: "bold" }} variant="h6">
-                  Edit Post
-                </Typography>
-              );
-            }
-            if (post === "AddPost") {
-              return (
-                <Typography style={{ fontWeight: "bold" }} variant="h6">
-                  Add Post
-                </Typography>
-              );
-            }
+
             if (comment === "EditComment") {
               return (
                 <Typography style={{ fontWeight: "bold" }} variant="h6">
@@ -157,9 +190,13 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, username: e.target.value })
+                        }
                         placeholder="Username"
                         fullWidth
                         className={classes.input}
+                        defaultValue={ComparedDataToEdit.username}
                       />
                     </Container>
                   </Box>
@@ -167,9 +204,13 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="Fullname"
+                        onChange={(e) =>
+                          setstate({ ...state, firstname: e.target.value })
+                        }
+                        placeholder="FirstName"
                         fullWidth
                         className={classes.input}
+                        defaultValue={ComparedDataToEdit.firstname}
                       />
                     </Container>
                   </Box>
@@ -177,8 +218,40 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, lastname: e.target.value })
+                        }
+                        placeholder="Last Name"
+                        fullWidth
+                        className={classes.input}
+                        defaultValue={ComparedDataToEdit.lastname}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, code: e.target.value })
+                        }
+                        placeholder="Code"
+                        fullWidth
+                        className={classes.input}
+                        defaultValue={ComparedDataToEdit.code}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        onChange={(e) =>
+                          setstate({ ...state, email: e.target.value })
+                        }
                         placeholder="Email address"
                         fullWidth
+                        defaultValue={ComparedDataToEdit.email}
                         endAdornment={
                           <EmailOutlined
                             fontSize="small"
@@ -186,6 +259,7 @@ const AddAndEditMemberDialog = ({
                           />
                         }
                         className={classes.input}
+                        code
                       />
                     </Container>
                   </Box>
@@ -193,6 +267,10 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
+                        defaultValue={ComparedDataToEdit.phone}
+                        onChange={(e) =>
+                          setstate({ ...state, phone: e.target.value })
+                        }
                         placeholder="Phone No"
                         fullWidth
                         className={classes.input}
@@ -203,30 +281,107 @@ const AddAndEditMemberDialog = ({
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="About Me"
+                        defaultValue={ComparedDataToEdit.number}
+                        onChange={(e) =>
+                          setstate({ ...state, number: e.target.value })
+                        }
+                        placeholder="Number"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="Role Type"
+                        defaultValue={ComparedDataToEdit.country}
+                        onChange={(e) =>
+                          setstate({ ...state, country: e.target.value })
+                        }
+                        placeholder="Country Name"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
                   <Box my={1}>
                     <Container>
                       <OutlinedInput
-                        placeholder="Password"
+                        defaultValue={ComparedDataToEdit.city}
+                        onChange={(e) =>
+                          setstate({ ...state, city: e.target.value })
+                        }
+                        placeholder="City Name"
                         fullWidth
                         className={classes.input}
                       />
                     </Container>
                   </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        defaultValue={ComparedDataToEdit.incidents}
+                        type="number"
+                        onChange={(e) =>
+                          setstate({ ...state, incidents: e.target.value })
+                        }
+                        placeholder="Incidents"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        defaultValue={ComparedDataToEdit.about}
+                        onChange={(e) =>
+                          setstate({ ...state, about: e.target.value })
+                        }
+                        placeholder="About"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <OutlinedInput
+                        defaultValue={ComparedDataToEdit.address}
+                        onChange={(e) =>
+                          setstate({ ...state, address: e.target.value })
+                        }
+                        placeholder="Address"
+                        fullWidth
+                        className={classes.input}
+                      />
+                    </Container>
+                  </Box>
+
+                  <Box my={1}>
+                    <Container>
+                      <Button
+                        startIcon={
+                          <LocationOn
+                            fontSize="small"
+                            style={{ color: MainCyan }}
+                          />
+                        }
+                        variant="outlined"
+                        fullWidth
+                        style={{ borderRadius: 20 }}
+                        onClick={getLocation}
+                      >
+                        Get User Location
+                      </Button>
+                    </Container>
+                  </Box>
+
                   <Box>
                     <Container>
                       <Button
@@ -234,8 +389,11 @@ const AddAndEditMemberDialog = ({
                         fullWidth
                         className={classes.buttonStyle}
                         style={{ marginBottom: "16px" }}
+                        onClick={() =>
+                          updateUserByAdmin(ComparedDataToEdit._id)
+                        }
                       >
-                        Update
+                        Update User
                       </Button>
                     </Container>
                   </Box>
@@ -448,149 +606,6 @@ const AddAndEditMemberDialog = ({
             }
           })()}
 
-          {/* iife for add a post */}
-          {(() => {
-            if (post === "AddPost") {
-              return (
-                <div>
-                  <Container maxWidth="xs">
-                    <Grid container>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                    </Grid>
-                  </Container>
-                  <Box my={1}>
-                    <Container>
-                      <OutlinedInput
-                        placeholder="Add title"
-                        fullWidth
-                        className={classes.input}
-                      />
-                    </Container>
-                  </Box>
-
-                  <Box my={1}>
-                    <Container>
-                      <OutlinedInput
-                        placeholder="Description"
-                        fullWidth
-                        multiline
-                        rows={4}
-                      />
-                    </Container>
-                  </Box>
-                  {/* here it will be map */}
-                  <Box my={1}>
-                    <Container>
-                      <img src={mapimg} height="100px" width="400px" alt="" />
-                    </Container>
-                  </Box>
-                  {/* end map */}
-                  <Box my={1}>
-                    {/* this will be a select element */}
-                    <Container>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel>Select Crime Type</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={age}
-                          onChange={handleChange}
-                        >
-                          <MenuItem value="Safety">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Safety
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Crime">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Crime
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Neighbourly moment">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Neighbourly moment
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Missing Person">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Missing Person
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Suspicious activity">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Suspicious activity
-                            </Typography>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Container>
-                  </Box>
-                  <Box>
-                    <Container>
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        className={classes.buttonStyle}
-                        style={{ marginBottom: "16px" }}
-                      >
-                        Add Post
-                      </Button>
-                    </Container>
-                  </Box>
-                </div>
-              );
-            }
-          })()}
           {/* iife for edit member */}
           {(() => {
             if (member === "EditMember") {
@@ -779,149 +794,7 @@ const AddAndEditMemberDialog = ({
               );
             }
           })()}
-          {/* iife for edit a post */}
-          {(() => {
-            if (post === "EditPost") {
-              return (
-                <div>
-                  <Container maxWidth="xs">
-                    <Grid container>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <img
-                          style={{ borderRadius: "10px" }}
-                          src={dummyimg}
-                          alt=""
-                          width="70%"
-                          height="70px"
-                        />
-                      </Grid>
-                    </Grid>
-                  </Container>
-                  <Box my={1}>
-                    <Container>
-                      <OutlinedInput
-                        placeholder="Add title"
-                        fullWidth
-                        className={classes.input}
-                      />
-                    </Container>
-                  </Box>
 
-                  <Box my={1}>
-                    <Container>
-                      <OutlinedInput
-                        placeholder="Description"
-                        fullWidth
-                        multiline
-                        rows={4}
-                      />
-                    </Container>
-                  </Box>
-                  {/* here it will be map */}
-                  <Box my={1}>
-                    <Container>
-                      <img src={mapimg} height="100px" width="400px" alt="" />
-                    </Container>
-                  </Box>
-                  {/* end map */}
-                  <Box my={1}>
-                    {/* this will be a select element */}
-                    <Container>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel>Select Crime Type</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={age}
-                          onChange={handleChange}
-                        >
-                          <MenuItem value="Safety">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Safety
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Crime">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Crime
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Neighbourly moment">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Neighbourly moment
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Missing Person">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Missing Person
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem value="Suspicious activity">
-                            <Typography
-                              variant="subtitle2"
-                              style={{ color: MainCyan }}
-                            >
-                              Suspicious activity
-                            </Typography>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Container>
-                  </Box>
-                  <Box>
-                    <Container>
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        className={classes.buttonStyle}
-                        style={{ marginBottom: "16px" }}
-                      >
-                        Update Post
-                      </Button>
-                    </Container>
-                  </Box>
-                </div>
-              );
-            }
-          })()}
           {/* iffie for edit the comments */}
           {(() => {
             if (comment === "EditComment") {
@@ -954,6 +827,18 @@ const AddAndEditMemberDialog = ({
             }
           })()}
         </DialogContent>
+      </Dialog>
+      <Dialog open={openimg} onClose={() => setopenimg(false)}>
+        <DialogTitle>
+          Update an image
+          <form
+            encType="multipart/form-data"
+            onSubmit={(e) => uploadImage(e, ComparedDataToEdit._id)}
+          >
+            <input type="file" name="image" onChange={onChangeFile} />
+            <input type="submit" />
+          </form>
+        </DialogTitle>
       </Dialog>
     </div>
   );

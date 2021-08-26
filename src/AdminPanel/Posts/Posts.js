@@ -18,22 +18,29 @@ import {
   Button,
   ButtonGroup,
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogActions,
-  Input,
 } from "@material-ui/core";
-import MainDialog from "./MainDialog";
+import PostDialog from "./PostDialog";
+import {
+  getAllDataOfIncidentsToAdmin,
+  imageUrl,
+  deleteIncident,
+} from "../../Api/AdminIncidentsApi";
 import {
   Add,
   CheckCircleOutline,
   ErrorOutline,
   PictureAsPdf,
 } from "@material-ui/icons";
-import React from "react";
-import { MainCyan, useStyles } from "../Styles/Main.Styles";
-import dummyimg from "../images/download.jpg"
-import Navbar from "./Navbar";
-
+import React, { useEffect, useState } from "react";
+import { MainCyan, useStyles } from "../../Styles/Main.Styles";
+import Navbar from "../Navbar";
+import axios from "axios";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
+// just remember that now we going the make the dialog box separate for the posts and onword components
 const Posts = () => {
   const classes = useStyles();
   const [age, setAge] = React.useState("");
@@ -41,18 +48,45 @@ const Posts = () => {
   const [delet, setdelet] = React.useState(false);
   const [opentwo, setopentwo] = React.useState(false);
   const [post, setpost] = React.useState("NoSelection");
+  const [state, setstate] = React.useState(undefined);
+  const [PostId, setPostId] = React.useState(undefined);
+  const [refresh, setrefresh] = React.useState(false);
+  const [openShowFiles, setopenShowFiles] = React.useState(false);
+
+  const headers = {
+    authorization: `Bearer ${Cookies.get("admin")}`,
+  };
+  useEffect(() => {
+    getAllDataOfIncidents();
+  }, [refresh]);
+
+  // -1.delete a post,But first open the confirmation box
+  const deleteApost = (postId) => {
+    setdelet(true);
+    setPostId(postId);
+  };
+
+  // 0.Get data from data base and show it
+  const getAllDataOfIncidents = async () => {
+    try {
+      const { data } = await axios.get(`${getAllDataOfIncidentsToAdmin}`, {
+        headers,
+      });
+      // console.log(data.data);
+      setstate(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // 1.add a new post
   const addNewPost = () => {
     setpost("AddPost");
     setopen(true);
-  
   };
   // 2.edit a new post
   const editPost = async () => {
     setpost("EditPost");
     setopen(true);
-   
-    
   };
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -62,10 +96,22 @@ const Posts = () => {
     setopen(false);
     setopentwo(false);
   };
-  //open only one dialog
-  const openOneDialog = () => {
-    setdelet(false);
-    setopentwo(true);
+  //open delete confirmation ok and in real delete it only;
+  const openOneDialog = async () => {
+    try {
+      const { data } = await axios.delete(`${deleteIncident(PostId)}`, {
+        headers,
+      });
+
+      if (data.success) {
+        toast.success("Record deleted");
+        setdelet(false);
+        setopentwo(true);
+        setrefresh(!refresh);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
@@ -118,17 +164,13 @@ const Posts = () => {
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <Box textAlign="right">
-               
                 {/* pdf icon */}
                 <IconButton>
                   <PictureAsPdf fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
                 {/* add icon */}
                 <IconButton onClick={addNewPost}>
-                  <Add
-                    fontSize="small"
-                    style={{ color: MainCyan }} 
-                  />
+                  <Add fontSize="small" style={{ color: MainCyan }} />
                 </IconButton>
               </Box>
             </Grid>
@@ -147,37 +189,31 @@ const Posts = () => {
                           UserId
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Id
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Title
                         </TableCell>
                         <TableCell
-                           
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Location
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Incident Type
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Camera
                         </TableCell>
                         <TableCell
-                          
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Time Post
@@ -192,113 +228,107 @@ const Posts = () => {
                     </TableHead>
                     <TableBody>
                       {/* row */}
-                      <TableRow>
-                        <TableCell align="right">John001</TableCell>
-                        <TableCell align="right">001</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell  style={{fontSize:"10px"}}>This is psot location</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell align="right">
-                          <Grid container>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}} src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                          </Grid>
-                        </TableCell>
-                        <TableCell >00:00 AM</TableCell>
 
-                        <TableCell  align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                            >
-                              Approve
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={editPost}
-                            >
-                              Edit
-                            </Button>
-                          </ButtonGroup>
-                        </TableCell>
-                      </TableRow>
-                      {/* row */}
-                      <TableRow>
-                        <TableCell align="right">John001</TableCell>
-                        <TableCell align="right">001</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell style={{fontSize:"10px"}}>This is psot location</TableCell>
-                        <TableCell style={{fontSize:"10px"}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, aliquid, error commodi expedita, sit tempore recusandae eum illo labore ipsa modi ea.
-                        </TableCell>
-                        <TableCell align="right">
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                              <img style={{borderRadius:"10px"}}  src={dummyimg} alt=""  width="40px" height="40px" />
-                            </Grid>
-                          </Grid>
-                        </TableCell>
-                        <TableCell align="right">12:12 AM</TableCell>
+                      {state &&
+                        state.map((val) => (
+                          <TableRow>
+                            {/* userid */}
+                            <TableCell>Remains</TableCell>
+                            {/* id */}
+                            <TableCell>{val._id}</TableCell>
+                            {/* title */}
+                            <TableCell>{val.title}</TableCell>
+                            {/* location */}
+                            <TableCell>
+                              {val.location.lng}
+                              {val.location.lat}
+                            </TableCell>
+                            {/* incident type */}
+                            <TableCell>{val.type}</TableCell>
+                            {/* incident type */}
+                            <TableCell>
+                              <Button onClick={() => setopenShowFiles(true)}>
+                                Show Files
+                              </Button>
+                              <Grid container spacing={2}>
+                                {val.files.map((val) => (
+                                  <span>
+                                    {/* make a dialog to show the files */}
 
-                        <TableCell align="right">
-                          <ButtonGroup orientation="horizontal">
-                            <Button
-                              size="small"
-                              className={classes.buttonStyle}
-                            >
-                              Approve
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={() => setdelet(true)}
-                            >
-                              Delete
-                            </Button>
-                            <Button
-                              size="small"
-                              className={classes.buttonStyleOutlined}
-                              onClick={editPost}
-                            >
-                              Edit
-                            </Button>
-                          </ButtonGroup>
-                        </TableCell>
-                      </TableRow>
+                                    {
+                                      <React.Fragment>
+                                        {(() => {
+                                          var imagefile =
+                                            val.type.split("/")[0];
+                                          if (imagefile === "image")
+                                            return (
+                                              <img
+                                                src={`${imageUrl}/${val.path}`}
+                                                width="50px"
+                                                height="30px"
+                                                alt=""
+                                                style={{
+                                                  border: "1px solid blue",
+                                                  margin: 4,
+                                                  padding: 1,
+                                                  cursor: "pointer",
+                                                }}
+                                              />
+                                            );
+                                        })()}
+
+                                        {(() => {
+                                          var videofile =
+                                            val.type.split("/")[0];
+                                          if (videofile === "video") {
+                                            return (
+                                              <video
+                                                style={{
+                                                  border: "1px solid red",
+                                                  margin: 4,
+                                                  padding: 1,
+                                                }}
+                                                src={`${imageUrl}/${val.path}`}
+                                                width="50px"
+                                                alt=""
+                                              />
+                                            );
+                                          }
+                                        })()}
+                                      </React.Fragment>
+                                    }
+                                  </span>
+                                ))}
+                              </Grid>
+                            </TableCell>
+                            {/* time */}
+                            <TableCell>{val.createdAt}</TableCell>
+                            <TableCell align="right">
+                              <ButtonGroup orientation="horizontal">
+                                <Button
+                                  size="small"
+                                  className={classes.buttonStyle}
+                                >
+                                  Approve
+                                </Button>
+                                <Button
+                                  size="small"
+                                  className={classes.buttonStyleOutlined}
+                                  onClick={() => deleteApost(val._id)}
+                                >
+                                  Delete
+                                </Button>
+                                <Button
+                                  size="small"
+                                  className={classes.buttonStyleOutlined}
+                                  onClick={editPost}
+                                >
+                                  Edit
+                                </Button>
+                              </ButtonGroup>
+                            </TableCell>
+                          </TableRow>
+                        ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -379,13 +409,9 @@ const Posts = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* edit user dialog */}
-      {/* if postCheck is true:add a post , else it will edit a post */}
-      <MainDialog
-        post={post}
-        open={open}
-        setopen={setopen}
-      />
+
+      {/* two cases here add/edit a post*/}
+      <PostDialog post={post} open={open} setopen={setopen} />
     </div>
   );
 };
