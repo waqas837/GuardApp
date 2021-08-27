@@ -26,6 +26,8 @@ export const getdummydata = `${BaseURL}/adminUserApi/getdummydata`;
 // 7. imageUploadForUsers
 export const imageUploadForUsers = (id) =>
   `${BaseURL}/adminUserApi/imageUploadForUsers/${id}`;
+
 // 8.UpdateUserImageOnly
 export const UpdateUserImageOnly = (id) =>
   `${BaseURL}/adminUserApi/UpdateUserImageOnly/${id}`;
+

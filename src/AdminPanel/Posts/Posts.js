@@ -27,6 +27,8 @@ import {
   getAllDataOfIncidentsToAdmin,
   imageUrl,
   deleteIncident,
+  getSpecificPostFiles,
+  selectAstatusOfPost,
 } from "../../Api/AdminIncidentsApi";
 import {
   Add,
@@ -39,7 +41,7 @@ import { MainCyan, useStyles } from "../../Styles/Main.Styles";
 import Navbar from "../Navbar";
 import axios from "axios";
 import Cookies from "js-cookie";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 // just remember that now we going the make the dialog box separate for the posts and onword components
 const Posts = () => {
   const classes = useStyles();
@@ -52,18 +54,52 @@ const Posts = () => {
   const [PostId, setPostId] = React.useState(undefined);
   const [refresh, setrefresh] = React.useState(false);
   const [openShowFiles, setopenShowFiles] = React.useState(false);
+  const [datafiles, setdatafiles] = React.useState(undefined);
+  const [valueselect, setvalueselect] = React.useState("");
 
   const headers = {
     authorization: `Bearer ${Cookies.get("admin")}`,
   };
+
   useEffect(() => {
     getAllDataOfIncidents();
   }, [refresh]);
-
+  //
+  const onChangeStatusSelect = async (e, postId) => {
+    setvalueselect(e.target.value);
+    try {
+      const { data } = await axios.post(
+        `${selectAstatusOfPost(postId)}`,
+        { status: e.target.value },
+        {
+          headers,
+        }
+      );
+      if (data.success) {
+        toast.success("Status Changed !");
+        setrefresh(!refresh);
+      }
+    } catch (error) {
+      toast.error("Internel server error");
+    }
+  };
   // -1.delete a post,But first open the confirmation box
   const deleteApost = (postId) => {
     setdelet(true);
     setPostId(postId);
+  };
+  // -0.get only Images and vidoes on a dialog api,
+  const getImagesAndVidoes = async (postId) => {
+    setopenShowFiles(true);
+    try {
+      const { data } = await axios.get(`${getSpecificPostFiles(postId)}`, {
+        headers,
+      });
+      setdatafiles(data.data.files);
+      console.log(data.data.files);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 0.Get data from data base and show it
@@ -72,7 +108,13 @@ const Posts = () => {
       const { data } = await axios.get(`${getAllDataOfIncidentsToAdmin}`, {
         headers,
       });
-      // console.log(data.data);
+      // console.log(data.data.map((val)=>val.location.coordinates.map((val)=>val)));
+      var myData = data.data.map((val) =>
+        val.location.coordinates.map((val) => val)
+      );
+      // console.log(myData[0][1])
+      // console.log(myData[0][0])
+
       setstate(data.data);
     } catch (error) {
       console.log(error);
@@ -117,6 +159,7 @@ const Posts = () => {
     <div>
       {/* navbar */}
       <Navbar />
+      <Toaster />
       <Box mt={5} className={classes.resposiveFromSide}>
         <Container maxWidth="md">
           {/* line 0 */}
@@ -198,6 +241,13 @@ const Posts = () => {
                         >
                           Title
                         </TableCell>
+
+                        <TableCell
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Description
+                        </TableCell>
+
                         <TableCell
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
@@ -217,6 +267,12 @@ const Posts = () => {
                           style={{ color: MainCyan, fontWeight: "bold" }}
                         >
                           Time Post
+                        </TableCell>
+
+                        <TableCell
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          Status
                         </TableCell>
                         <TableCell
                           align="center"
@@ -238,83 +294,60 @@ const Posts = () => {
                             <TableCell>{val._id}</TableCell>
                             {/* title */}
                             <TableCell>{val.title}</TableCell>
+                            {/* description */}
+
+                            <TableCell>{val.description}</TableCell>
                             {/* location */}
                             <TableCell>
-                              {val.location.lng}
-                              {val.location.lat}
+                              Lat: {val.location.coordinates[0]}
+                              <br />
+                              Lng: {val.location.coordinates[1]}
                             </TableCell>
                             {/* incident type */}
                             <TableCell>{val.type}</TableCell>
-                            {/* incident type */}
+
+                            {/* show files */}
                             <TableCell>
-                              <Button onClick={() => setopenShowFiles(true)}>
+                              <Button
+                                size="small"
+                                onClick={() => getImagesAndVidoes(val._id)}
+                                variant="contained"
+                                style={{ fontSize: 10 }}
+                              >
                                 Show Files
                               </Button>
-                              <Grid container spacing={2}>
-                                {val.files.map((val) => (
-                                  <span>
-                                    {/* make a dialog to show the files */}
-
-                                    {
-                                      <React.Fragment>
-                                        {(() => {
-                                          var imagefile =
-                                            val.type.split("/")[0];
-                                          if (imagefile === "image")
-                                            return (
-                                              <img
-                                                src={`${imageUrl}/${val.path}`}
-                                                width="50px"
-                                                height="30px"
-                                                alt=""
-                                                style={{
-                                                  border: "1px solid blue",
-                                                  margin: 4,
-                                                  padding: 1,
-                                                  cursor: "pointer",
-                                                }}
-                                              />
-                                            );
-                                        })()}
-
-                                        {(() => {
-                                          var videofile =
-                                            val.type.split("/")[0];
-                                          if (videofile === "video") {
-                                            return (
-                                              <video
-                                                style={{
-                                                  border: "1px solid red",
-                                                  margin: 4,
-                                                  padding: 1,
-                                                }}
-                                                src={`${imageUrl}/${val.path}`}
-                                                width="50px"
-                                                alt=""
-                                              />
-                                            );
-                                          }
-                                        })()}
-                                      </React.Fragment>
-                                    }
-                                  </span>
-                                ))}
-                              </Grid>
                             </TableCell>
                             {/* time */}
                             <TableCell>{val.createdAt}</TableCell>
+                            {/* select a status */}
+                            {/* select a stauts */}
+                            <TableCell>
+                              <FormControl style={{ minWidth: 120 }}>
+                                <InputLabel>Select status</InputLabel>
+                                <Select
+                                  onChange={(e) =>
+                                    onChangeStatusSelect(e, val._id)
+                                  }
+                                  value={valueselect}
+                                >
+                                  <MenuItem value={"verified"} button>
+                                    Verify
+                                  </MenuItem>
+                                  <MenuItem value={"unverified"} button>
+                                    Unverify
+                                  </MenuItem>
+                                  <MenuItem value={"deleted"} button>
+                                    Delete
+                                  </MenuItem>
+                                </Select>
+                              </FormControl>
+                            </TableCell>
                             <TableCell align="right">
                               <ButtonGroup orientation="horizontal">
                                 <Button
                                   size="small"
-                                  className={classes.buttonStyle}
-                                >
-                                  Approve
-                                </Button>
-                                <Button
-                                  size="small"
-                                  className={classes.buttonStyleOutlined}
                                   onClick={() => deleteApost(val._id)}
+                                  className={classes.buttonStyle}
                                 >
                                   Delete
                                 </Button>
@@ -409,7 +442,82 @@ const Posts = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* dialog for show the files and imges */}
+      <Dialog
+        style={{ borderRadius: 0 }}
+        open={openShowFiles}
+        onClose={() => setopenShowFiles(false)}
+      >
+        <DialogTitle>Files</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            {datafiles &&
+              datafiles.map((val) => (
+                <span>
+                  {/* make a dialog to show the files */}
 
+                  {
+                    <React.Fragment>
+                      {(() => {
+                        var imagefile = val.type.split("/")[0];
+                        if (imagefile === "image")
+                          return (
+                            <span>
+                              <a href={`${imageUrl}/${val.path}`}>
+                                <img
+                                  src={`${imageUrl}/${val.path}`}
+                                  width="50px"
+                                  height="30px"
+                                  alt=""
+                                  style={{
+                                    border: "1px solid blue",
+                                    margin: 4,
+                                    padding: 1,
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </a>
+                            </span>
+                          );
+                      })()}
+
+                      {(() => {
+                        var videofile = val.type.split("/")[0];
+                        if (videofile === "video") {
+                          return (
+                            <a href={`${imageUrl}/${val.path}`}>
+                              <video
+                                style={{
+                                  border: "1px solid red",
+                                  margin: 4,
+                                  padding: 1,
+                                  cursor: "pointer",
+                                }}
+                                src={`${imageUrl}/${val.path}`}
+                                width="50px"
+                                alt=""
+                              />
+                            </a>
+                          );
+                        }
+                      })()}
+                    </React.Fragment>
+                  }
+                </span>
+              ))}
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() => setopenShowFiles(false)}
+            style={{ fontSize: 10 }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* two cases here add/edit a post*/}
       <PostDialog post={post} open={open} setopen={setopen} />
     </div>

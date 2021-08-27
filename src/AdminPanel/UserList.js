@@ -367,7 +367,7 @@ const UserList = () => {
                             {/* <TableCell align="right">{val.location}</TableCell> */}
 
                             <TableCell>
-                              <FormControl style={{ minWidth: 120 }}>
+                              <FormControl style={{ minWidth: 120 }}> 
                                 <InputLabel>Select status</InputLabel>
                                 <Select
                                   onChange={onChangeStatusSelect}
