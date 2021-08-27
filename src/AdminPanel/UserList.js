@@ -36,6 +36,7 @@ import {
   Add,
   CheckCircleOutline,
   ErrorOutline,
+  FiberManualRecord,
   PictureAsPdf,
 } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
@@ -304,6 +305,12 @@ const UserList = () => {
                         >
                           Incidents
                         </TableCell>
+                        <TableCell
+                          align="center"
+                          style={{ color: MainCyan, fontWeight: "bold" }}
+                        >
+                          TYPE
+                        </TableCell>
 
                         {/* <TableCell
                           align="right"
@@ -367,7 +374,7 @@ const UserList = () => {
                             {/* <TableCell align="right">{val.location}</TableCell> */}
 
                             <TableCell>
-                              <FormControl style={{ minWidth: 120 }}> 
+                              <FormControl style={{ minWidth: 120 }}>
                                 <InputLabel>Select status</InputLabel>
                                 <Select
                                   onChange={onChangeStatusSelect}
@@ -388,6 +395,20 @@ const UserList = () => {
                             {/* <TableCell align="right">{val.type}</TableCell> */}
                             <TableCell align="center">
                               {val.incidents}
+                            </TableCell>
+                            <TableCell>
+                              {val.type === "admin" ? (
+                                <span>
+                                  <IconButton style={{ fontSize: 10 }}>
+                                    <FiberManualRecord
+                                      color="secondary"
+                                      fontSize="small"
+                                      style={{ fontSize: 10 }}
+                                    />
+                                    {"  "} Admin
+                                  </IconButton>
+                                </span>
+                              ) : null}
                             </TableCell>
                             <TableCell align="right">
                               <ButtonGroup orientation="horizontal">

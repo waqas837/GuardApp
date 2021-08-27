@@ -57,7 +57,7 @@ const LoginAdmin = () => {
             xl={4}
             style={{ marginLeft: "auto", marginRight: "auto", padding: 10 }}
           >
-            {loading ? <LinearProgress color="primary" /> : null}
+            {loading ? <LinearProgress color="primary"/> : null}
             <Paper
               elevation={4}
               style={{ borderRadius: 0, paddingTop: 10, paddingBottom: 5 }}

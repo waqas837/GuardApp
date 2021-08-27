@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import mapimg from "../images/locationimage.png";
-import toast, { Toaster } from "react-hot-toast";
+ import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
-import dummyimg from "../images/download.jpg";
 import axios from "axios";
 import { addNewUser, UpdateUser, UpdateUserImageOnly } from "../Api/AdminUserApi";
 import {
@@ -15,11 +13,6 @@ import {
   IconButton,
   OutlinedInput,
   Typography,
-  Grid,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
 } from "@material-ui/core";
 import { EmailOutlined, HighlightOff, LocationOn } from "@material-ui/icons";
 import { MainCyan, useStyles } from "../Styles/Main.Styles";
